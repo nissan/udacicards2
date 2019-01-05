@@ -6,13 +6,14 @@ import { Constants, AppLoading } from "expo";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
+import { setDummyData } from "./utils/api";
 
 export default class App extends React.Component {
   state = {
     ready: false
   };
   componentDidMount() {
-    this.setState({ ready: true });
+    setDummyData().then(() => this.setState({ ready: true }));
   }
   render() {
     const { ready } = this.state;
