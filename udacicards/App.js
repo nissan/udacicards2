@@ -2,10 +2,20 @@ import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import AppNavigator from "./components/AppNavigator";
 import TabNavigator from "./components/TabNavigator";
-import { Constants } from "expo";
+import { Constants, AppLoading } from "expo";
 
 export default class App extends React.Component {
+  state = {
+    ready: false
+  };
+  componentDidMount() {
+    this.setState({ ready: true });
+  }
   render() {
+    const { ready } = this.state;
+    if (!ready) {
+      return <AppLoading />;
+    }
     return (
       <React.Fragment>
         <View
