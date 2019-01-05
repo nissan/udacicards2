@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { getDecks } from "../utils/api";
 import { receiveDecks } from "../actions";
@@ -32,7 +32,7 @@ export class ListDecksScreen extends React.Component {
   render() {
     const { decks } = this.props;
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={styles.container}>
         <FlatList
           data={Object.keys(decks).map(key => ({
             title: decks[key].title,
@@ -45,6 +45,12 @@ export class ListDecksScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 
 const mapStateToProps = (decks, ownProps) => {
   return {

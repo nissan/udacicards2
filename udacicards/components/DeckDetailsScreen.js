@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform
+} from "react-native";
 import { connect } from "react-redux";
 
 export class DeckDetailsScreen extends React.Component {
@@ -20,9 +26,15 @@ export class DeckDetailsScreen extends React.Component {
     const cardCount = questions.length;
 
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>{title}</Text>
-        <Text>{cardCount}</Text>
+      <View style={styles.container}>
+        <View style={styles.summary}>
+          <Text style={styles.txtHeaderWhite}>{title}</Text>
+          <Text>{"\n"}</Text>
+          <Text style={styles.count}>
+            {cardCount} {Number(cardCount) === 1 ? " card" : " cards"}
+          </Text>
+        </View>
+
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate("NewCard")}
         >
@@ -37,6 +49,44 @@ export class DeckDetailsScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  summary: {
+    flexDirection: "row",
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    backgroundColor: "blue",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: Platform.OS === "ios" ? 16 : 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: "rgba(0,0,0,0.24)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  txtHeaderWhite: {
+    padding: 4,
+    color: "white",
+    fontSize: 25,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  count: {
+    padding: 4,
+    color: "white",
+    fontSize: 18,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 const mapStateToProps = (decks, ownProps) => {
   const { navigation } = ownProps;
