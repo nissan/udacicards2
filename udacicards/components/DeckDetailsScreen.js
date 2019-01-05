@@ -40,12 +40,14 @@ export class DeckDetailsScreen extends React.Component {
         >
           <Text style={styles.txtWhite}>Add Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btnGray}
-          onPress={() => this.props.navigation.navigate("DoQuiz", { title })}
-        >
-          <Text style={styles.txtBlack}>Start Quiz</Text>
-        </TouchableOpacity>
+        {cardCount > 0 && (
+          <TouchableOpacity
+            style={styles.btnGray}
+            onPress={() => this.props.navigation.navigate("DoQuiz", { title })}
+          >
+            <Text style={styles.txtBlack}>Start Quiz</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
