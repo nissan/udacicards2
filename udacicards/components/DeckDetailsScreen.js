@@ -36,7 +36,7 @@ export class DeckDetailsScreen extends React.Component {
 
         <TouchableOpacity
           style={styles.btnBlack}
-          onPress={() => this.props.navigation.navigate("NewCard")}
+          onPress={() => this.props.navigation.navigate("NewCard", { title })}
         >
           <Text style={styles.txtWhite}>Add Card</Text>
         </TouchableOpacity>
