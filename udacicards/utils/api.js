@@ -32,7 +32,7 @@ export const addCardToDeck = async (title, card) => {
     return data;
   });
   const questions = Object.assign([], decks[title].questions.concat(card));
-  return AsyncStorage.mergeItem(
+  return await AsyncStorage.mergeItem(
     DECKS_STORAGE_KEY,
     JSON.stringify({ [title]: { title, questions } })
   );
