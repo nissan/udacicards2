@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, StatusBar } from "react-native";
 import AppNavigator from "./components/AppNavigator";
 import TabNavigator from "./components/TabNavigator";
 import { Constants, AppLoading } from "expo";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducer from "./reducers";
 
 export default class App extends React.Component {
   state = {
@@ -17,14 +20,14 @@ export default class App extends React.Component {
       return <AppLoading />;
     }
     return (
-      <React.Fragment>
+      <Provider store={createStore(reducer)}>
         <View
           style={{ height: Constants.statusBarHeight, backgroundColor: "blue" }}
         >
           <StatusBar translucent barStyle="light-content" {...this.props} />
         </View>
         <TabNavigator />
-      </React.Fragment>
+      </Provider>
     );
   }
 }
