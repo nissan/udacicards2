@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { connect } from "react-redux";
 
 export class DeckDetailsScreen extends React.Component {
   static navigationOptions = {
@@ -15,18 +15,21 @@ export class DeckDetailsScreen extends React.Component {
   //   };
   // };
   render() {
-    const { navigation } = this.props;
-    const id = navigation.getParam("id", 0);
+    const { deck } = this.props;
+    const { title, questions } = deck;
+    const cardCount = questions.length;
+
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Deck Details for {JSON.stringify(id)}</Text>
+        <Text>{title}</Text>
+        <Text>{cardCount}</Text>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate("NewCard")}
         >
           <Text>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("DoQuiz")}
+          onPress={() => this.props.navigation.navigate("DoQuiz", { title })}
         >
           <Text>Start Quiz</Text>
         </TouchableOpacity>
@@ -35,4 +38,12 @@ export class DeckDetailsScreen extends React.Component {
   }
 }
 
-export default DeckDetailsScreen;
+const mapStateToProps = (decks, ownProps) => {
+  const { navigation } = ownProps;
+  const id = navigation.getParam("id", 0);
+  return {
+    deck: decks[id]
+  };
+};
+
+export default connect(mapStateToProps)(DeckDetailsScreen);

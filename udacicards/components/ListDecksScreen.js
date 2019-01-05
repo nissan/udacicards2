@@ -22,6 +22,7 @@ export class ListDecksScreen extends React.Component {
         onPress={() =>
           this.props.navigation.navigate("DeckDetails", { id: item.title })
         }
+        {...this.props}
       />
     );
   };
