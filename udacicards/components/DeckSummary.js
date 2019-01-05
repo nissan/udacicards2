@@ -12,6 +12,7 @@ export const DeckSummary = ({ title, cardCount, onPress }) => {
     <View style={styles.summary}>
       <TouchableOpacity style={styles.btn} onPress={onPress}>
         <Text style={styles.btnTextWhite}>{title}</Text>
+
         <Text style={styles.count}>
           {cardCount} {Number(cardCount) === 1 ? " card" : " cards"}
         </Text>
@@ -49,9 +50,11 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   count: {
+    padding: 4,
+    color: "white",
     fontSize: 18,
-    textAlign: "center",
-    color: "white"
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 export default DeckSummary;

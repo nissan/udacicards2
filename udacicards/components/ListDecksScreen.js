@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { getDecks } from "../utils/api";
 import { receiveDecks } from "../actions";
@@ -9,18 +9,37 @@ export class ListDecksScreen extends React.Component {
   static navigationOptions = {
     title: "Decks"
   };
+  constructor(props) {
+    super(props);
+    this.renderItem = this.renderItem.bind(this);
+  }
+  renderItem = ({ item }) => {
+    return (
+      <DeckSummary
+        key={item.title}
+        title={item.title}
+        cardCount={item.cardCount}
+        onPress={() =>
+          this.props.navigation.navigate("DeckDetails", { id: item.title })
+        }
+      />
+    );
+  };
   async componentDidMount() {
     const decks = await getDecks();
     this.props.dispatch(receiveDecks(decks));
   }
   render() {
-    const { navigation } = this.props;
+    const { decks } = this.props;
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <DeckSummary
-          title="Test Deck"
-          cardCount="3"
-          onPress={() => navigation.navigate("DeckDetails", { id: 1 })}
+        <FlatList
+          data={Object.keys(decks).map(key => ({
+            title: decks[key].title,
+            cardCount: decks[key].questions.length
+          }))}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
