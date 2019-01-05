@@ -24,6 +24,10 @@ const TabNavigator =
         {
           defaultNavigationOptions: ({ navigation }) => ({
             initialRouteName: "Home",
+            tabBarOptions: {
+              activeTintColor: "tomato",
+              inactiveTintColor: "black"
+            },
             tabBarIcon: ({ tintColor }) => {
               const { routeName } = navigation.state;
               switch (routeName) {
@@ -46,9 +50,19 @@ const TabNavigator =
           })
         }
       )
-    : createMaterialTopTabNavigator({
-        Home: AppNavigator,
-        "New Deck": NewDeckScreen
-      });
+    : createMaterialTopTabNavigator(
+        {
+          Home: AppNavigator,
+          "New Deck": NewDeckScreen
+        },
+        {
+          defaultNavigationOptions: ({ navigation }) => ({
+            tabBarOptions: {
+              activeTintColor: "tomato",
+              inactiveTintColor: "white"
+            }
+          })
+        }
+      );
 
 export default createAppContainer(TabNavigator);
