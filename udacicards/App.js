@@ -7,6 +7,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
 import { setDummyData } from "./utils/api";
+import { setLocalNotification } from "./utils/helpers";
 
 export default class App extends React.Component {
   state = {
@@ -14,6 +15,7 @@ export default class App extends React.Component {
   };
   componentDidMount() {
     setDummyData().then(() => this.setState({ ready: true }));
+    setLocalNotification();
   }
   render() {
     const { ready } = this.state;

@@ -7,6 +7,7 @@ import {
   Platform
 } from "react-native";
 import { connect } from "react-redux";
+import { setLocalNotification, clearLocalNotification } from "../utils/helpers";
 
 export class DoQuizScreen extends React.Component {
   static navigationOptions = {
@@ -42,6 +43,7 @@ export class DoQuizScreen extends React.Component {
     this.setState(() => ({ incorrect: this.state.incorrect + 1 }));
     this.nextQuestion();
   };
+
   reset() {
     console.log("reset called");
     this.setState({
@@ -76,9 +78,11 @@ export class DoQuizScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnCorrect}
-            onPress={() =>
-              this.props.navigation.navigate("DeckDetails", { id: title })
-            }
+            onPress={() => {
+              clearLocalNotification();
+              setLocalNotification();
+              this.props.navigation.navigate("DeckDetails", { id: title });
+            }}
           >
             <Text style={styles.txtWhite}>Back to Deck</Text>
           </TouchableOpacity>
