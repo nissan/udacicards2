@@ -19,9 +19,7 @@ export class ListDecksScreen extends React.Component {
         key={item.title}
         title={item.title}
         cardCount={item.cardCount}
-        onPress={() =>
-          this.props.navigation.navigate("DeckDetails", { id: item.title })
-        }
+        {...this.props}
       />
     );
   };

@@ -4,22 +4,36 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform
+  Platform,
+  Animated
 } from "react-native";
 
-export const DeckSummary = ({ title, cardCount, onPress }) => {
-  return (
-    <View style={styles.summary}>
-      <TouchableOpacity style={styles.btn} onPress={onPress}>
-        <Text style={styles.btnTextWhite}>{title}</Text>
+export class DeckSummary extends React.Component {
+  constructor(props) {
+    super(props);
+    btnPress = this.btnPress.bind(this);
+  }
+  btnPress = id => {
+    this.props.navigation.navigate("DeckDetails", { id });
+  };
+  render() {
+    const { title, cardCount } = this.props;
+    return (
+      <View style={styles.summary}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => this.btnPress(title)}
+        >
+          <Text style={styles.btnTextWhite}>{title}</Text>
 
-        <Text style={styles.count}>
-          {cardCount} {Number(cardCount) === 1 ? " card" : " cards"}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+          <Text style={styles.count}>
+            {cardCount} {Number(cardCount) === 1 ? " card" : " cards"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
 const styles = StyleSheet.create({
   summary: {
     flex: 1
