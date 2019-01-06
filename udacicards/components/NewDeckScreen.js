@@ -47,8 +47,11 @@ export class NewDeckScreen extends React.Component {
           onChangeText={this.titleChange}
           value={title}
         />
-        <TouchableOpacity onPress={() => this.addDeck()}>
-          <Text>Submit</Text>
+        <TouchableOpacity
+          style={styles.btnSubmit}
+          onPress={() => this.addDeck()}
+        >
+          <Text style={styles.txtWhite}>Submit</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -89,6 +92,31 @@ const styles = StyleSheet.create({
       width: 0,
       height: 3
     }
+  },
+  btnSubmit: {
+    backgroundColor: "blue",
+    flexDirection: "row",
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: Platform.OS === "ios" ? 16 : 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: "rgba(0,0,0,0.24)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  txtWhite: {
+    padding: 4,
+    color: "white",
+    fontSize: 20,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 export default connect()(NewDeckScreen);
