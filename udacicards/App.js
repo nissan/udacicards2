@@ -14,7 +14,8 @@ export default class App extends React.Component {
     ready: false
   };
   componentDidMount() {
-    setDummyData().then(() => this.setState({ ready: true }));
+    // setDummyData().then(() => this.setState({ ready: true }));
+    this.setState(() => ({ ready: true }));
     setLocalNotification();
   }
   render() {
