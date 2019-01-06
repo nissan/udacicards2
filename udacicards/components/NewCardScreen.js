@@ -53,7 +53,7 @@ export class NewCardScreen extends React.Component {
     const title = navigation.getParam("title", 0);
     const { question, answer } = this.state;
     return (
-      <KeyboardAvoidingView style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <Text style={styles.screenHeader}> Deck: {title}</Text>
         <Text style={styles.header}>Question</Text>
         <TextInput
@@ -79,8 +79,8 @@ export class NewCardScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: "flex-start",
+    justifyContent: "flex-start"
   },
   screenHeader: {
     flexDirection: "row",

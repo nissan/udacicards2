@@ -39,7 +39,7 @@ export class NewDeckScreen extends React.Component {
   render() {
     const { title } = this.state;
     return (
-      <KeyboardAvoidingView style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <Text style={styles.header}>What is the title of your new deck?</Text>
         <TextInput
           style={styles.input}
