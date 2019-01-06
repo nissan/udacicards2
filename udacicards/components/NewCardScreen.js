@@ -39,7 +39,7 @@ export class NewCardScreen extends React.Component {
     ) {
       addCardToDeck(title, card);
       dispatch(addCard({ title, question, answer }));
-      navigation.navigate("Home");
+      navigation.navigate("DeckDetails", { id: title });
     }
   };
   questionChange = question => {
