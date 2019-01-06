@@ -28,8 +28,6 @@ export class DoQuizScreen extends React.Component {
   nextQuestion = () => {
     const currentQuestion = this.state.currentQuestion + 1;
     const { questions } = this.props.deck;
-    console.log("currentQuestion", currentQuestion, typeof currentQuestion);
-    console.log("questions length", questions.length, typeof questions.length);
     if (currentQuestion < questions.length) {
       this.setState(() => ({ currentQuestion, showAnswer: false }));
     } else {
