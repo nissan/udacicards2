@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform
+} from "react-native";
 import { connect } from "react-redux";
 
 export class DoQuizScreen extends React.Component {
@@ -15,7 +21,29 @@ export class DoQuizScreen extends React.Component {
   constructor(props) {
     super(props);
     this.reset = this.reset.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
+    this.incrementCorrect = this.incrementCorrect.bind(this);
+    this.incrementInCorrect = this.incrementInCorrect.bind(this);
   }
+  nextQuestion = () => {
+    const currentQuestion = this.state.currentQuestion + 1;
+    const { questions } = this.props.deck;
+    console.log("currentQuestion", currentQuestion, typeof currentQuestion);
+    console.log("questions length", questions.length, typeof questions.length);
+    if (currentQuestion < questions.length) {
+      this.setState(() => ({ currentQuestion, showAnswer: false }));
+    } else {
+      this.setState(() => ({ endQuiz: true }));
+    }
+  };
+  incrementCorrect = () => {
+    this.setState(() => ({ correct: this.state.correct + 1 }));
+    this.nextQuestion();
+  };
+  incrementInCorrect = () => {
+    this.setState(() => ({ incorrect: this.state.incorrect + 1 }));
+    this.nextQuestion();
+  };
   reset() {
     console.log("reset called");
     this.setState({
@@ -38,42 +66,173 @@ export class DoQuizScreen extends React.Component {
     const { title, questions } = deck;
     if (endQuiz) {
       return (
-        <View>
-          <Text>
+        <View style={styles.header}>
+          <Text style={styles.txtBlack}>
             Your score is {correct} correct and {incorrect} incorrect
           </Text>
-          <TouchableOpacity onPress={() => this.reset()}>
-            <Text>Reset</Text>
+          <TouchableOpacity
+            onPress={() => this.reset()}
+            style={styles.btnCorrect}
+          >
+            <Text style={styles.txtWhite}>Restart Quiz</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Home")}
+            style={styles.btnCorrect}
+            onPress={() =>
+              this.props.navigation.navigate("DeckDetails", { id: title })
+            }
           >
-            <Text>Go Home</Text>
+            <Text style={styles.txtWhite}>Back to Deck</Text>
           </TouchableOpacity>
         </View>
       );
     }
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>
+      <View style={styles.container}>
+        <Text style={styles.header}>
           {currentQuestion + 1} of {questions.length}
         </Text>
-        {currentQuestion < questions.length - 1 && (
-          <TouchableOpacity
-            onPress={() =>
-              this.setState({ currentQuestion: this.state.currentQuestion + 1 })
-            }
-          >
-            <Text>Next Question</Text>
-          </TouchableOpacity>
+        {showAnswer && (
+          <View>
+            <Text style={styles.answer}>
+              {questions[currentQuestion].answer}
+            </Text>
+            <TouchableOpacity
+              style={styles.btnSmall}
+              onPress={() =>
+                this.setState({ showAnswer: !this.state.showAnswer })
+              }
+            >
+              <Text style={styles.txtRedSmall}>Show Question</Text>
+            </TouchableOpacity>
+          </View>
         )}
-        <TouchableOpacity onPress={() => this.setState({ endQuiz: true })}>
-          <Text>End Quiz</Text>
+        {!showAnswer && (
+          <View>
+            <Text style={styles.question}>
+              {questions[currentQuestion].question}
+            </Text>
+            <TouchableOpacity
+              style={styles.btnSmall}
+              onPress={() =>
+                this.setState({ showAnswer: !this.state.showAnswer })
+              }
+            >
+              <Text style={styles.txtRedSmall}>Show Answer</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        <TouchableOpacity
+          style={styles.btnCorrect}
+          onPress={() => this.incrementCorrect()}
+        >
+          <Text style={styles.txtWhite}>Correct</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.btnIncorrect}
+          onPress={() => this.incrementInCorrect()}
+        >
+          <Text style={styles.txtWhite}>Incorrect</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
+  header: {
+    fontSize: 20,
+    color: "blue"
+  },
+  question: {
+    fontSize: 18,
+    color: "blue"
+  },
+  answer: {
+    fontSize: 18,
+    color: "green"
+  },
+  btnSmall: {
+    flexDirection: "row",
+    padding: 4,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 4,
+    marginBottom: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: Platform.OS === "ios" ? 16 : 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: "rgba(0,0,0,0.24)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  btnCorrect: {
+    backgroundColor: "green",
+    flexDirection: "row",
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: Platform.OS === "ios" ? 16 : 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: "rgba(0,0,0,0.24)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  btnIncorrect: {
+    backgroundColor: "red",
+    flexDirection: "row",
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: Platform.OS === "ios" ? 16 : 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: "rgba(0,0,0,0.24)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  txtWhite: {
+    padding: 4,
+    color: "white",
+    fontSize: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  txtBlack: {
+    padding: 4,
+    color: "black",
+    fontSize: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  txtRedSmall: {
+    padding: 4,
+    color: "red",
+    fontSize: 14,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 const mapStateToProps = (decks, ownProps) => {
   const { navigation } = ownProps;
   const title = navigation.getParam("title", 0);
