@@ -9,17 +9,28 @@ import {
 } from "react-native";
 
 export class DeckSummary extends React.Component {
+  state = {
+    bounceValue: new Animated.Value(1)
+  };
   constructor(props) {
     super(props);
     btnPress = this.btnPress.bind(this);
   }
   btnPress = id => {
+    const { bounceValue } = this.state;
+    Animated.sequence([
+      Animated.timing(bounceValue, { duration: 200, toValue: 1.1 }),
+      Animated.spring(bounceValue, { toValue: 1, friction: 4 })
+    ]).start();
     this.props.navigation.navigate("DeckDetails", { id });
   };
   render() {
     const { title, cardCount } = this.props;
+    const { bounceValue } = this.state;
     return (
-      <View style={styles.summary}>
+      <Animated.View
+        style={[styles.summary, { transform: [{ scale: bounceValue }] }]}
+      >
         <TouchableOpacity
           style={styles.btn}
           onPress={() => this.btnPress(title)}
@@ -30,7 +41,7 @@ export class DeckSummary extends React.Component {
             {cardCount} {Number(cardCount) === 1 ? " card" : " cards"}
           </Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     );
   }
 }
