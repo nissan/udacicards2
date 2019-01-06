@@ -69,8 +69,11 @@ export class NewCardScreen extends React.Component {
           onChangeText={this.answerChange}
           value={answer}
         />
-        <TouchableOpacity onPress={() => this.addCard(title)}>
-          <Text>Submit</Text>
+        <TouchableOpacity
+          style={styles.btnSubmit}
+          onPress={() => this.addCard(title)}
+        >
+          <Text style={styles.txtWhite}>Submit</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
@@ -79,12 +82,12 @@ export class NewCardScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "flex-start"
   },
   screenHeader: {
     flexDirection: "row",
-    padding: 20,
+    padding: 5,
     marginLeft: 10,
     marginRight: 10,
     justifyContent: "flex-start",
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    padding: 20,
+    padding: 5,
     marginLeft: 10,
     marginRight: 10,
     justifyContent: "center",
@@ -121,6 +124,31 @@ const styles = StyleSheet.create({
       width: 0,
       height: 3
     }
+  },
+  btnSubmit: {
+    backgroundColor: "blue",
+    flexDirection: "row",
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: Platform.OS === "ios" ? 16 : 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: "rgba(0,0,0,0.24)",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  txtWhite: {
+    padding: 4,
+    color: "white",
+    fontSize: 20,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 export default connect()(NewCardScreen);
