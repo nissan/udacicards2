@@ -51,7 +51,7 @@ export class NewDeckScreen extends React.Component {
           style={styles.btnSubmit}
           onPress={() => this.addDeck()}
         >
-          <Text style={styles.txtWhite}>Submit</Text>
+          <Text style={styles.txtWhite}>Create Deck</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     );
