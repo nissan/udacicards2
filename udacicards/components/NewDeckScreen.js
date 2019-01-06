@@ -30,7 +30,7 @@ export class NewDeckScreen extends React.Component {
       saveDeckTitle(title);
       const deck = { [title]: { title, questions: [] } };
       dispatch(addDeck(deck));
-      navigation.navigate("Home");
+      navigation.navigate("DeckDetails", { id: title });
     }
   };
   titleChange = title => {
