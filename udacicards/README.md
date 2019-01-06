@@ -2,7 +2,7 @@
 
 This project was bootstrapped with the [Create React Native App](https://github.com/react-community/create-react-native-app)
 
-It should run appropriately on both iOS and Android.
+It should run appropriately on both iOS and Android. It has been tested on emulators for both platforms.
 
 ## Pre-requisites
 
@@ -12,7 +12,7 @@ To test this application either an iOS or Android simulator must be installed, o
 
 1. Clone the repo using git e.g. `git clone https://github.com/nissan/udacicards2`
 2. Run `yarn` in the root folder to restore packages
-3. Run `expo start` to start the application
+3. Run `yarn start` or `expo start` to start the application
 
 ## Purpose
 
